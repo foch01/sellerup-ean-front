@@ -1,8 +1,9 @@
 <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
     <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="email">E-mail</nz-form-label>
-        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid E-mail!">
-            <input nz-input formControlName="email" id="email" />
+        <nz-form-control nzErrorTip="The input is not valid E-mail!">
+            <nz-input-group nzPrefixIcon="lock">
+                <input nz-input formControlName="email" id="email" placeholder="Email" />
+            </nz-input-group>
         </nz-form-control>
     </nz-form-item>
     <nz-form-item>
@@ -17,7 +18,7 @@
             <label nz-checkbox formControlName="remember">
                 <span>Remember me</span>
             </label>
-            <a class="login-form-forgot" class="login-form-forgot">Forgot password</a>
+            <a class="login-form-forgot" class="login-form-forgot" routerLink="/forgot-password">Forgot password</a>
             <button nz-button class="login-form-button" [nzType]="'primary'">Log in</button>
             Or
             <a routerLink="/register-user">register now!</a>

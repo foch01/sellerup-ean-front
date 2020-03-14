@@ -1,8 +1,42 @@
-<nz-card style="width:300px;" nzTitle="Mon profil" *ngIf="authService.userData as user">
-    <p>User ID: <strong>{{user.uid}}</strong></p>
-    <p>Email: <strong>{{user.email}}</strong></p>
-    <p>Email Verified: <strong>{{user.emailVerified}}</strong></p>
-</nz-card>
+<div class="container-profile">
+    <nz-card style="width:300px;" nzTitle="Mon profil" *ngIf="authService.userData as user" [nzExtra]="signout">
+        <p>
+            User ID: <strong>{{ user.uid }}</strong>
+        </p>
+        <p>
+            Email: <strong>{{ user.email }}</strong>
+        </p>
+        <p>
+            Email Verified: <strong>{{ user.emailVerified }}</strong>
+        </p>
+    </nz-card>
 
-<button nz-button [nzSize]="'large'" nzType="primary" (click)="authService.SignOut()">Deconnexion</button>
+    <ng-template #signout>
+        <button nz-button [nzSize]="'large'" nzType="primary" (click)="authService.SignOut()">
+            <i nz-icon nzType="logout" nzTheme="outline"></i>Deconnexion
+        </button>
+    </ng-template>
 
+    <nz-card style="width:600px; margin-top: 25px" nzTitle="Code EAN" [nzExtra]="buttonGenerateEAN">
+        <nz-input-group nzSearch nzSize="large" [nzAddOnAfter]="suffixButton">
+            <input type="text" nz-input placeholder="input search text" [(ngModel)]="value" [disabled]="true" />
+        </nz-input-group>
+        <p style="margin-top: 5px">
+            <i
+                >N'hesitez pas à régénérer le code EAN si il ne fonctionne pas du premier coup. Il a pu être déjà
+                utilisé.</i
+            >
+        </p>
+        <ng-template #suffixButton>
+            <button nz-button nzType="primary" nzSize="large" nzSearch (click)="copyMessage(value)">
+                <i nz-icon nzType="copy" nzTheme="outline"></i>Copier
+            </button>
+        </ng-template>
+    </nz-card>
+
+    <ng-template #buttonGenerateEAN>
+        <button nz-button [nzSize]="'large'" nzType="primary" (click)="generateEAN()">
+            <i nz-icon nzType="sync" nzTheme="outline"></i>Générer un nouveau Code EAN
+        </button>
+    </ng-template>
+</div>
