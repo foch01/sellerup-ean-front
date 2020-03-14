@@ -19,8 +19,6 @@ export class SignUpComponent implements OnInit {
     }
 
     async submitForm(): Promise<void> {
-        console.log(this.validateForm);
-
         for (const i in this.validateForm.controls) {
             this.validateForm.controls[i].markAsDirty();
             this.validateForm.controls[i].updateValueAndValidity();

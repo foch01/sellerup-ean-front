@@ -32,12 +32,21 @@ export class AuthService {
     }
 
     // Sign in with email/password
-    SignIn(email, password) {
+    async SignIn(email: string, password: string) {
         return this.afAuth.auth
             .signInWithEmailAndPassword(email, password)
             .then(result => {
                 this.ngZone.run(() => {
-                    this.router.navigate(['dashboard']);
+                    // TODO refacto
+                    let i = 0;
+                    const loginTime = setInterval(() => {
+                        // tslint:disable-next-line:no-conditional-assignment
+                        if ((i = 2)) {
+                            this.router.navigate(['/dashboard']);
+                            clearInterval(loginTime);
+                        }
+                        i++;
+                    }, 1000);
                 });
                 this.SetUserData(result.user);
             })
@@ -102,7 +111,8 @@ export class AuthService {
                 this.SetUserData(result.user);
             })
             .catch(error => {
-                window.alert(error);
+                console.log(error);
+                window.alert(error + 'la');
             });
     }
 

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../shared/auth/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-sign-in',
@@ -9,7 +10,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class SignInComponent implements OnInit {
     validateForm: FormGroup;
-    constructor(public authService: AuthService, private fb: FormBuilder) {}
+    constructor(public authService: AuthService, private fb: FormBuilder, public router: Router) {}
 
     ngOnInit(): void {
         this.validateForm = this.fb.group({
@@ -18,11 +19,11 @@ export class SignInComponent implements OnInit {
             remember: [true],
         });
     }
-    async submitForm(): Promise<void> {
+    submitForm(): void {
         for (const i in this.validateForm.controls) {
             this.validateForm.controls[i].markAsDirty();
             this.validateForm.controls[i].updateValueAndValidity();
         }
-        await this.authService.SignIn(this.validateForm.value.email, this.validateForm.value.password);
+        this.authService.SignIn(this.validateForm.value.email, this.validateForm.value.password);
     }
 }
