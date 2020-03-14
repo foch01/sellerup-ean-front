@@ -17,7 +17,7 @@
         </button>
     </ng-template>
 
-    <nz-card style="width:600px; margin-top: 25px" nzTitle="Code EAN" [nzExtra]="buttonGenerateEAN">
+    <nz-card nzTitle="Code EAN" [nzExtra]="buttonGenerateEAN" class="generate-ean">
         <nz-input-group nzSearch nzSize="large" [nzAddOnAfter]="suffixButton">
             <input type="text" nz-input placeholder="input search text" [(ngModel)]="value" [disabled]="true" />
         </nz-input-group>
