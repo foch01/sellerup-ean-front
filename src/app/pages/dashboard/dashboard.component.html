@@ -39,4 +39,45 @@
             <i nz-icon nzType="sync" nzTheme="outline"></i>Générer un nouveau Code EAN
         </button>
     </ng-template>
+
+    <nz-card style="width:800px; margin-top: 25px" nzTitle="Générateur de labyrinthe" [nzExtra]="buttonGenerateMaze">
+        <div nz-row>
+            <nz-form-item nz-col nzSpan="6">
+                <nz-form-label [nzSpan]="8" nzFor="email">Ligne</nz-form-label>
+                <nz-form-control [nzSpan]="14">
+                    <nz-input-number
+                        [(ngModel)]="row"
+                        [nzMin]="20"
+                        [nzMax]="100"
+                        [nzStep]="1"
+                        [nzPlaceHolder]="'Nombre de ligne'"
+                    ></nz-input-number>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item nz-col nzSpan="6">
+                <nz-form-label [nzSpan]="8" nzFor="email">Colonne</nz-form-label>
+                <nz-form-control [nzSpan]="14">
+                    <nz-input-number
+                        [(ngModel)]="col"
+                        [nzMin]="30"
+                        [nzMax]="100"
+                        [nzStep]="1"
+                        [nzPlaceHolder]="'Nombre de colonne'"
+                    ></nz-input-number>
+                </nz-form-control>
+            </nz-form-item>
+            <button nz-button [nzSize]="'large'" nzType="primary" (click)="downloadImage()">
+                <i nz-icon nzType="download" nzTheme="outline"></i>Télécharger l'image
+            </button>
+        </div>
+        <canvas id="maze"></canvas>
+        <ng-template #buttonGenerateMaze>
+            <button style="margin-right: 5px" nz-button [nzSize]="'large'" nzType="primary" (click)="generateMaze()">
+                <i nz-icon nzType="sync" nzTheme="outline"></i>Générer un nouveau labyrinthe
+            </button>
+            <button nz-button [nzSize]="'large'" nzType="primary" (click)="generatePath()">
+                <i nz-icon nzType="rollback" nzTheme="outline"></i>Générer le chemin
+            </button>
+        </ng-template>
+    </nz-card>
 </div>

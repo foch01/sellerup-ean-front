@@ -1,18 +1,30 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { AuthService } from '../../shared/auth/auth.service';
 import { NzMessageService } from 'ng-zorro-antd';
+import { MazeService } from '../../shared/maze/maze.service';
 
 @Component({
     selector: 'app-dashboard',
     templateUrl: './dashboard.component.html',
     styleUrls: ['./dashboard.component.less'],
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, AfterViewInit {
     public value: string;
+    row = 20;
+    col = 30;
+    length = 20;
+    private maze: MazeService;
+    private canvas: HTMLCanvasElement;
+
     constructor(public authService: AuthService, private message: NzMessageService) {}
 
     ngOnInit() {
         this.generateEAN();
+    }
+
+    ngAfterViewInit(): void {
+        this.canvas = document.getElementById('maze') as HTMLCanvasElement;
+        this.generateMaze();
     }
 
     generateEAN() {
@@ -52,5 +64,27 @@ export class DashboardComponent implements OnInit {
         document.execCommand('copy');
         document.body.removeChild(selBox);
         this.message.create('success', `Le code EAN est prêt à être coller.`);
+    }
+
+    generateMaze() {
+        console.log('generate Maze');
+        this.maze = new MazeService(this.row, this.col);
+        this.canvas.width = this.col * this.length;
+        this.canvas.height = this.row * this.length;
+        this.maze.draw(this.canvas, this.length);
+    }
+
+    generatePath() {
+        console.log('generate Path');
+        this.maze.drawPath(this.canvas, this.length);
+    }
+
+    downloadImage() {
+        const canvas = document.getElementById('maze') as HTMLCanvasElement;
+        const image = canvas.toDataURL('image/png', 1.0).replace('image/png', 'image/octet-stream');
+        const link = document.createElement('a');
+        link.download = `maze.png`;
+        link.href = image;
+        link.click();
     }
 }
